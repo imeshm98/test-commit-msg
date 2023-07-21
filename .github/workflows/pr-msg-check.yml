@@ -18,3 +18,4 @@ jobs:
           echo "Error: Pull request title must contain a valid JIRA ID. Example: '[XAPICO-123] PR msg' Title of the PR"
           exit 1
         fi
+        exit 0
