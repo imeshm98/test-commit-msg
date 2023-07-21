@@ -1,0 +1,20 @@
+name: PR Title Check
+on:
+  pull_request:
+
+jobs:
+  check_pr_title:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Check out code
+      uses: actions/checkout@v2
+      
+    - name: Check PR title for JIRA ID
+      run: |
+        TITLE_REGEX='^\[XAPICO-[0-9]+\] .+'
+        PR_TITLE=$(jq -r '.pull_request.title' $GITHUB_EVENT_PATH)
+        
+        if [[ ! $PR_TITLE =~ $TITLE_REGEX ]]; then
+          echo "Error: Pull request title must contain a valid JIRA ID. Example: '[XAPICO-123] PR msg' Title of the PR"
+          exit 1
+        fi
